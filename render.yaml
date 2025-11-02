@@ -1,17 +1,24 @@
+databases:
+  - name: lab3-db
+    plan: free
+    region: frankfurt
+
 services:
   - type: web
     name: lab3-flask
     env: python
     plan: free
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "bash -c 'flask db upgrade && gunicorn app:app'"
+    region: frankfurt
+    buildCommand: pip install -r requirements.txt
+    startCommand: bash -c "flask db upgrade && gunicorn app:app"
     envVars:
       - key: FLASK_APP
         value: app.py
+      - key: FLASK_ENV
+        value: production
       - key: DATABASE_URL
         fromDatabase:
           name: lab3-db
           property: connectionString
-
-databases:
-  - name: lab3-db
+      - key: PYTHON_VERSION
+        value: 3.13.4
