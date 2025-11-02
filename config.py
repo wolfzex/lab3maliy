@@ -2,7 +2,7 @@ import os
 
 # Локально: Postgres із docker-compose; на Render — з env DATABASE_URL
 SQLALCHEMY_DATABASE_URI = os.getenv(
-    "DATABASE_URL", "postgresql://admin:admin@localhost:5432/lab3_db"
+    "DATABASE_URL", "postgresql://postgres:1234@localhost:5432/lab3_db"
 )
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
