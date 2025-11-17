@@ -10,7 +10,7 @@ services:
     plan: free
     region: frankfurt
     buildCommand: pip install -r requirements.txt
-    startCommand: bash -c "flask db upgrade && gunicorn app:app"
+    startCommand: bash -c "flask db upgrade && gunicorn -w 1 app:app"
     envVars:
       - key: FLASK_APP
         value: app.py
