@@ -1,384 +1,288 @@
 {
   "info": {
     "_postman_id": "4f9cf4c6-202a-480a-ac7d-c0728fbdd97d",
-    "name": "Expense REST API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "45049941"
+    "name": "Expense REST API (Lab 4 - Auth)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
-      "name": "Create user",
-      "event": [
+      "name": "Auth",
+      "item": [
         {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "let data = pm.response.json();",
-              "pm.collectionVariables.set(\"user_id\", data.id);",
-              "pm.test(\"Created user has id\", function(){ pm.expect(data.id).to.be.a(\"number\"); });"
-            ]
-          }
-        }
-      ],
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"username\": \"Alice\"\n}"
-        },
-        "url": {
-          "raw": "{{baseUrl}}/user",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "user"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Create category",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "let data = pm.response.json();",
-              "pm.collectionVariables.set(\"category_id\", data.id);",
-              "pm.test(\"Created category has id\", function(){ pm.expect(data.id).to.be.a(\"number\"); });"
-            ]
-          }
-        }
-      ],
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"name\": \"Food\"\n}"
-        },
-        "url": {
-          "raw": "{{baseUrl}}/category",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "category"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Create record",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "let data = pm.response.json();",
-              "pm.collectionVariables.set(\"record_id\", data.id);",
-              "pm.test(\"Created record has id\", function(){ pm.expect(data.id).to.be.a(\"number\"); });"
-            ]
-          }
-        }
-      ],
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"user_id\": \"{{user_id}}\",\n  \"category_id\": \"{{category_id}}\",\n  \"amount\": 99.9\n}"
-        },
-        "url": {
-          "raw": "{{baseUrl}}/record",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "record"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Get records by user",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text",
-            "disabled": true
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/record?user_id={{user_id}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "record"
-          ],
-          "query": [
+          "name": "Register User",
+          "event": [
             {
-              "key": "user_id",
-              "value": "{{user_id}}"
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let data = pm.response.json();",
+                  "pm.collectionVariables.set(\"user_id\", data.id);",
+                  "pm.test(\"Created user has id\", function(){ pm.expect(data.id).to.be.a(\"number\"); });"
+                ]
+              }
             }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Get records by category",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text",
-            "disabled": true
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/record?category_id={{category_id}}",
-          "host": [
-            "{{baseUrl}}"
           ],
-          "path": [
-            "record"
-          ],
-          "query": [
-            {
-              "key": "category_id",
-              "value": "{{category_id}}"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Get records by user+category",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text",
-            "disabled": true
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/record?user_id={{user_id}}&category_id={{category_id}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "record"
-          ],
-          "query": [
-            {
-              "key": "user_id",
-              "value": "{{user_id}}"
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"Alice\",\n  \"password\": \"supersecret123\"\n}"
             },
-            {
-              "key": "category_id",
-              "value": "{{category_id}}"
+            "url": {
+              "raw": "{{baseUrl}}/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["register"]
             }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "List users",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text",
-            "disabled": true
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/users",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "users"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Get user by id",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text",
-            "disabled": true
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/user/{{user_id}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "user",
-            "{{user_id}}"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Get record by id",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text",
-            "disabled": true
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/record/{{record_id}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "record",
-            "{{record_id}}"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Delete record",
-      "request": {
-        "method": "DELETE",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text",
-            "disabled": true
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/record/{{record_id}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "record",
-            "{{record_id}}"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Delete category",
-      "request": {
-        "method": "DELETE",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text",
-            "disabled": true
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/category?category_id={{category_id}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "category"
-          ],
-          "query": [
+          },
+          "response": []
+        },
+        {
+          "name": "Login User",
+          "event": [
             {
-              "key": "category_id",
-              "value": "{{category_id}}"
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let data = pm.response.json();",
+                  "pm.collectionVariables.set(\"access_token\", data.access_token);",
+                  "pm.test(\"Response has access_token\", function(){ pm.expect(data.access_token).to.be.a(\"string\"); });"
+                ]
+              }
             }
-          ]
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"Alice\",\n  \"password\": \"supersecret123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["login"]
+            }
+          },
+          "response": []
         }
-      },
-      "response": []
+      ]
     },
     {
-      "name": "Delete user",
-      "request": {
-        "method": "DELETE",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text",
-            "disabled": true
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/user/{{user_id}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "user",
-            "{{user_id}}"
-          ]
+      "name": "Users",
+      "item": [
+        {
+          "name": "List users",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{access_token}}", "type": "string" }]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user",
+              "host": ["{{baseUrl}}"],
+              "path": ["user"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get user by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{access_token}}", "type": "string" }]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user/{{user_id}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["user", "{{user_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete user",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{access_token}}", "type": "string" }]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user/{{user_id}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["user", "{{user_id}}"]
+            }
+          },
+          "response": []
         }
-      },
-      "response": []
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Create category",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let data = pm.response.json();",
+                  "pm.collectionVariables.set(\"category_id\", data.id);",
+                  "pm.test(\"Created category has id\", function(){ pm.expect(data.id).to.be.a(\"number\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{access_token}}", "type": "string" }]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Food\",\n  \"user_id\": {{user_id}}\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/category",
+              "host": ["{{baseUrl}}"],
+              "path": ["category"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List categories",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{access_token}}", "type": "string" }]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/category",
+              "host": ["{{baseUrl}}"],
+              "path": ["category"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Records",
+      "item": [
+        {
+          "name": "Create record",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let data = pm.response.json();",
+                  "pm.collectionVariables.set(\"record_id\", data.id);",
+                  "pm.test(\"Created record has id\", function(){ pm.expect(data.id).to.be.a(\"number\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{access_token}}", "type": "string" }]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"{{user_id}}\",\n  \"category_id\": \"{{category_id}}\",\n  \"amount\": 99.9\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/record",
+              "host": ["{{baseUrl}}"],
+              "path": ["record"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List records",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{access_token}}", "type": "string" }]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/record",
+              "host": ["{{baseUrl}}"],
+              "path": ["record"]
+            }
+          },
+          "response": []
+        }
+      ]
     }
   ],
   "variable": [
     {
       "key": "baseUrl",
       "value": "http://localhost:5000"
+    },
+    {
+      "key": "user_id",
+      "value": ""
+    },
+    {
+      "key": "category_id",
+      "value": ""
+    },
+    {
+      "key": "record_id",
+      "value": ""
+    },
+    {
+      "key": "access_token",
+      "value": ""
     }
   ]
 }
