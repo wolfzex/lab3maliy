@@ -10,15 +10,18 @@ from models.user import UserModel
 from models.category import CategoryModel
 from models.record import RecordModel
 
+
 def create_app():
     app = Flask(__name__)
-    app.config.from_pyfile('config.py', silent=False)
+    app.config.from_pyfile("config.py", silent=False)
 
-    app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
+    app.config["JWT_SECRET_KEY"] = os.getenv(
+        "JWT_SECRET_KEY",
+    )
 
     db.init_app(app)
     Migrate(app, db)
-    
+
     jwt = JWTManager(app)
 
     from resources.user import blp as UserBlueprint
@@ -33,7 +36,13 @@ def create_app():
     @jwt.expired_token_loader
     def expired_token_callback(jwt_header, jwt_payload):
         return (
-            jsonify({"message": "The token has expired.", "error": "token_expired"}),
+            jsonify(
+                {
+                    "message": "The token has expired.",
+                    "error": "token_expired",
+                    "details": str(error),
+                }
+            ),
             401,
         )
 
@@ -41,7 +50,11 @@ def create_app():
     def invalid_token_callback(error):
         return (
             jsonify(
-                {"message": "Signature verification failed.", "error": "invalid_token"}
+                {
+                    "message": "Signature verification failed.",
+                    "error": "invalid_token",
+                    "details": str(error),
+                }
             ),
             401,
         )
@@ -53,11 +66,12 @@ def create_app():
                 {
                     "description": "Request does not contain an access token.",
                     "error": "authorization_required",
+                    "details": str(error),
                 }
             ),
             401,
         )
-    
+
     @app.errorhandler(404)
     def not_found(e):
         return jsonify(message="Not found"), 404
@@ -67,6 +81,7 @@ def create_app():
         return jsonify(message="Internal server error"), 500
 
     return app
+
 
 app = create_app()
 

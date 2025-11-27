@@ -1,7 +1,9 @@
 from models import db
 
+
 class RecordModel(db.Model):
     __tablename__ = "records"
+
     id = db.Column(db.Integer, primary_key=True)
     amount = db.Column(db.Float, nullable=False)
     description = db.Column(db.String(200))
@@ -9,3 +11,4 @@ class RecordModel(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
     user = db.relationship("UserModel", back_populates="records")
+    category = db.relationship("CategoryModel", back_populates="records")

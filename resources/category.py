@@ -9,14 +9,16 @@ from models.user import UserModel
 
 blp = Blueprint("Categories", "categories", description="Expense categories")
 
+
 class CategorySchema(Schema):
     id = fields.Int(dump_only=True)
     name = fields.Str(required=True)
     is_global = fields.Bool(load_default=False)
     user_id = fields.Int(allow_none=True)
 
+
 @blp.route("/category")
-class CategoryList(MethodView):
+class CategoryListResource(MethodView):
     @jwt_required()
     @blp.response(200, CategorySchema(many=True))
     def get(self):
@@ -36,3 +38,19 @@ class CategoryList(MethodView):
         db.session.add(cat)
         db.session.commit()
         return cat
+
+
+@blp.route("/category/<int:category_id>")
+class CategoryResource(MethodView):
+    @jwt_required()
+    @blp.response(200, CategorySchema)
+    def get(self, category_id):
+        cat = CategoryModel.query.get_or_404(category_id)
+        return cat
+
+    @jwt_required()
+    def delete(self, category_id):
+        cat = CategoryModel.query.get_or_404(category_id)
+        db.session.delete(cat)
+        db.session.commit()
+        return {"message": "Category deleted."}, 200

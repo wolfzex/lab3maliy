@@ -10,6 +10,7 @@ from models.user import UserModel
 
 blp = Blueprint("Records", "records", description="Expense records")
 
+
 class RecordSchema(Schema):
     id = fields.Int(dump_only=True)
     amount = fields.Float(required=True)
@@ -17,8 +18,9 @@ class RecordSchema(Schema):
     category_id = fields.Int(required=True)
     user_id = fields.Int(required=True)
 
+
 @blp.route("/record")
-class RecordList(MethodView):
+class RecordListResource(MethodView):
     @jwt_required()
     @blp.response(200, RecordSchema(many=True))
     def get(self):
@@ -41,3 +43,19 @@ class RecordList(MethodView):
         db.session.add(rec)
         db.session.commit()
         return rec
+
+
+@blp.route("/record/<int:record_id>")
+class RecordResource(MethodView):
+    @jwt_required()
+    @blp.response(200, RecordSchema)
+    def get(self, record_id):
+        rec = RecordModel.query.get_or_404(record_id)
+        return rec
+
+    @jwt_required()
+    def delete(self, record_id):
+        rec = RecordModel.query.get_or_404(record_id)
+        db.session.delete(rec)
+        db.session.commit()
+        return {"message": "Record deleted."}, 200
